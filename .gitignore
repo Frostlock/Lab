@@ -1,6 +1,9 @@
 # exclude the NonGit subfolder
 non_git/
 
+# exclude venv folder (Pycharm virtual environment)
+venv/
+
 # exclude compiled python files
 *.py[cod]
 
