@@ -23,6 +23,8 @@ echo "exec startlxde" >~/.xsession
 
 # Install the rdp server
 sudo apt-get install xrdp -y -q
+# Restart the rdp server
+sudo service xrdp restart
 
 ##################
 # EXTRA SOFTWARE #
