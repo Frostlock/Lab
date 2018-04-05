@@ -11,15 +11,16 @@ sudo timedatectl set-timezone Europe/Brussels
 ##################
 # REMOTE DESKTOP #
 ##################
-# Install a desktop environment and launch it via .xsession
-#sudo apt-get install xfce4 -y -q
-#echo xfce4-session >~/.xsession
+# Install XFCE desktop environment and launch it via .xsession
+sudo apt-get install xfce4 -y -q
+echo xfce4-session >~/.xsession
 # Optional: install some extra software packages
-#sudo apt-get install xfce4-terminal, mousepad -y -q
+sudo apt-get install xfce4-terminal, mousepad -y -q
 
-# Install a desktop environment and launch it via .xsession
-sudo apt-get install lxde -y -q
-echo "exec startlxde" >~/.xsession
+# You can replace the above by the following if you prefer LXDE
+# Install LXDE desktop environment and launch it via .xsession
+#sudo apt-get install lxde -y -q
+#echo "exec startlxde" >~/.xsession
 
 # Install the rdp server
 sudo apt-get install xrdp -y -q
