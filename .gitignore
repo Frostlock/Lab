@@ -4,6 +4,9 @@ non_git/
 # exclude venv folder (Pycharm virtual environment)
 venv/
 
+# exclude secret files
+*.secret
+
 # exclude compiled python files
 *.py[cod]
 

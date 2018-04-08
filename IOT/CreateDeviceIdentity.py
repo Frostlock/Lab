@@ -1,13 +1,14 @@
-#pip install azure-iothub-service-client
-
 import sys
 import iothub_service_client
 from iothub_service_client import IoTHubRegistryManager, IoTHubRegistryManagerAuthMethod
 from iothub_service_client import IoTHubDeviceStatus, IoTHubError
 
 # Adapt the following parameters
-CONNECTION_STRING = "[IoTHub Connection String]"
-DEVICE_ID = "MyFirstPythonDevice"
+# Find this in the IOT hub service -> shared access policies -> iothubowner policy
+F = open('OwnerConnectionString.secret')
+CONNECTION_STRING = F.read().strip()
+F.close()
+DEVICE_ID = "SimulatedDevice"
 
 def print_device_info(title, iothub_device):
     print ( title + ":" )

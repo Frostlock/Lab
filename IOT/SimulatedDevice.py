@@ -1,5 +1,3 @@
-#pip install azure-iothub-device-client
-
 import random
 import time
 import sys
@@ -11,7 +9,10 @@ from iothub_client import IoTHubMessage, IoTHubMessageDispositionResult, IoTHubE
 # The device connection string is usually in the format of HostName=<hostName>;DeviceId=<deviceId>;SharedAccessKey=<primaryKey>. 
 # Use the deviceId and primaryKey of the device you created earlier to replace the <deviceId> and <primaryKey> respectively.
 # Replace <hostName> with your IoT hub's host name, usually as <IoT hub name>.azure-devices.net.
-CONNECTION_STRING = "[IoTHub Device Connection String]"
+# Through the device explorer on the Azure portal you can easily copy paste this connection string.
+F = open('DeviceConnectionString.secret')
+CONNECTION_STRING = F.read().strip()
+F.close()
 # choose HTTP, AMQP or MQTT as transport protocol
 PROTOCOL = IoTHubTransportProvider.MQTT
 MESSAGE_TIMEOUT = 10000
