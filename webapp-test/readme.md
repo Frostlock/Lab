@@ -16,3 +16,5 @@ You can put the startup instruction directly in the Azure portal
 gunicorn --bind=0.0.0.0 --timeout 600 --chdir webapp-test application:app
 ``  
 Or you can put this instruction in a startup file and then put the path/filename in the Azure portal
+
+One down side is that to make it work I had to keep the requirements.txt in the root of the github repository.
