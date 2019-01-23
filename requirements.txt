@@ -1,4 +1,5 @@
 #Commented out some stuff :)
+#This requirements file is for the webapp-test and needs to be in the root of the repository
 #click==6.7
 Flask==1.0.2
 #itsdangerous==0.24
