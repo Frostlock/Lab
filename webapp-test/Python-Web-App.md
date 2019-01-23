@@ -26,3 +26,10 @@ git remote add azure https://pboogaerts@pboogaerts.scm.azurewebsites.net/pboogae
 git push azure master
 
 # A short while later the webapp will be running
+
+
+# To make the webapp run from a github subfolder you need to change the startup instruction
+# See documentation here:
+# https://code.visualstudio.com/docs/python/tutorial-deploy-app-service-on-linux
+# In my case the following is needed
+# 
