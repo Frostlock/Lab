@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
 
-MAINTAINER Your Name "Frostlock"
+MAINTAINER Your Name "N/A"
 
 COPY . /app
 WORKDIR /app
