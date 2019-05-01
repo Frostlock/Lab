@@ -1,5 +1,5 @@
 from flask import Flask
-from database.MonsterDB import Monster, MonsterDB
+from MonsterDB import Monster, MonsterDB
 
 app = Flask(__name__)
 

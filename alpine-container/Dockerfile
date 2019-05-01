@@ -1,6 +1,8 @@
-FROM python:3.7-alpine
+FROM alpine:3.7
 
-MAINTAINER Your Name "N/A"
+MAINTAINER Your Name "Frostlock"
+
+RUN apk add --update py-pip
 
 COPY . /app
 WORKDIR /app
