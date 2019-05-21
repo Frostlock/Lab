@@ -2,7 +2,7 @@
 non_git/
 
 # exclude venv folder (Pycharm virtual environment)
-venv/
+./venv/
 
 # exclude secret files
 *.secret
