@@ -1,3 +1,3 @@
-# Azure Lab
+# Lab
 
-This repository is used for my Azure experiments.
+This repository is used for my some of my personal experiments.
