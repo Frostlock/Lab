@@ -1,0 +1,88 @@
+version: '2'
+
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    environment:
+      - TZ=Europe/Brussels
+      - RUNAS_UID0=false
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+  unifi:
+    container_name: unifi
+    image: "jacobalberty/unifi"
+    network_mode: "host"
+    restart: always
+    environment:
+      - TZ=Europe/Brussels
+      - RUNAS_UID0=false
+    ports:
+      - "3478:3478/udp" # STUN
+      - "6789:6789/tcp" # Speed test
+      - "8080:8080/tcp" # Device/ controller comm.
+      - "8443:8443/tcp" # Controller GUI/API as seen in a web browser
+      - "8880:8880/tcp" # HTTP portal redirection
+      - "8843:8843/tcp" # HTTPS portal redirection
+      - "10001:10001/udp" # AP discovery
+    volumes:
+      - unifi_data:/unifi
+      - unifi_runtime:/var/run/unifi
+
+  organizr:
+    container_name: organizr
+    image: organizrtools/organizr-v2
+    restart: always
+    environment:
+      - TZ=Europe/Brussels
+      - RUNAS_UID0=false
+    ports:
+      - 80:80
+    volumes:
+      - organizr_data:/config
+
+  duplicacy:
+    container_name: duplicacy
+    image: saspus/duplicacy-web
+    hostname: 'docker-host'
+    restart: always
+    environment:
+      - TZ=Europe/Brussels
+      - RUNAS_UID0=false
+    ports:
+      - "3875:3875/tcp"
+    volumes:
+      - duplicacy_data:/config
+      - duplicacy_log:/logs
+      - duplicacy_cache:/cache
+      - /var/lib/docker/volumes/:/backuproot:ro
+
+  cadvisor:
+    container_name: cadvisor
+    image: google/cadvisor:latest
+    restart: always
+    environment:
+      - TZ=Europe/Brussels
+    ports:
+      - "8084:8080/tcp"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+
+volumes:
+  portainer_data:
+  unifi_data:
+  unifi_runtime:
+  organizr_data:
+  duplicacy_data:
+  duplicacy_log:
+  duplicacy_cache:
