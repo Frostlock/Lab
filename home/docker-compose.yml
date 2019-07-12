@@ -1,6 +1,23 @@
 version: '2'
 
 services:
+  traefik:
+    container_name: traefik
+    image: traefik
+    command: --api --docker
+    restart: always
+    networks:
+      - container_network
+    ports:
+      - "80:80"     
+#      - "8081:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+#      - traefik_data:/etc/traefik
+    labels:
+      - traefik.frontend.rule=Host:traefik
+      - traefik.port=8080
+
   portainer:
     container_name: portainer
     image: portainer/portainer
@@ -9,11 +26,16 @@ services:
     environment:
       - TZ=Europe/Brussels
       - RUNAS_UID0=false
-    ports:
-      - 9000:9000
+    networks:
+      - container_network
+#    ports:
+#      - 9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    labels:
+      - traefik.frontend.rule=Host:portainer
+      - traefik.port=9000
 
   unifi:
     container_name: unifi
@@ -42,10 +64,15 @@ services:
     environment:
       - TZ=Europe/Brussels
       - RUNAS_UID0=false
-    ports:
-      - 80:80
+    networks:
+      - container_network
+#    ports:
+#      - 90:80
     volumes:
       - organizr_data:/config
+    labels:
+      - traefik.frontend.rule=Host:organizr
+      - traefik.port=80
 
   duplicacy:
     container_name: duplicacy
@@ -55,13 +82,18 @@ services:
     environment:
       - TZ=Europe/Brussels
       - RUNAS_UID0=false
-    ports:
-      - "3875:3875/tcp"
+    networks:
+      - container_network
+#    ports:
+#      - "3875:3875/tcp"
     volumes:
       - duplicacy_data:/config
       - duplicacy_log:/logs
       - duplicacy_cache:/cache
       - /var/lib/docker/volumes/:/backuproot:ro
+    labels:
+      - traefik.frontend.rule=Host:duplicacy
+      - traefik.port=3875
 
   cadvisor:
     container_name: cadvisor
@@ -69,16 +101,22 @@ services:
     restart: always
     environment:
       - TZ=Europe/Brussels
-    ports:
-      - "8084:8080/tcp"
+    networks:
+      - container_network
+#    ports:
+#      - "8084:8080/tcp"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
+    labels:
+      - traefik.frontend.rule=Host:cadvisor
+      - traefik.port=8080
 
 volumes:
+#  traefik_data:
   portainer_data:
   unifi_data:
   unifi_runtime:
@@ -86,3 +124,11 @@ volumes:
   duplicacy_data:
   duplicacy_log:
   duplicacy_cache:
+
+networks:
+  container_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.10.0/24
