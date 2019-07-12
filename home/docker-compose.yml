@@ -13,7 +13,7 @@ services:
 #      - "8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-#      - traefik_data:/etc/traefik
+      - traefik_tmp:/tmp
     labels:
       - traefik.frontend.rule=Host:traefik
       - traefik.port=8080
@@ -116,7 +116,7 @@ services:
       - traefik.port=8080
 
 volumes:
-#  traefik_data:
+  traefik_tmp:
   portainer_data:
   unifi_data:
   unifi_runtime:
