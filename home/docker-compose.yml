@@ -9,13 +9,13 @@ services:
     networks:
       - container_network
     ports:
-      - "80:80"     
+      - "80:80"
 #      - "8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - traefik_tmp:/tmp
     labels:
-      - traefik.frontend.rule=Host:traefik
+      - traefik.frontend.rule=Host:traefik.docker.home
       - traefik.port=8080
 
   portainer:
@@ -34,7 +34,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
     labels:
-      - traefik.frontend.rule=Host:portainer
+      - traefik.frontend.rule=Host:portainer.docker.home
       - traefik.port=9000
 
   unifi:
@@ -71,7 +71,7 @@ services:
     volumes:
       - organizr_data:/config
     labels:
-      - traefik.frontend.rule=Host:organizr
+      - traefik.frontend.rule=Host:organizr.docker.home
       - traefik.port=80
 
   duplicacy:
@@ -92,7 +92,7 @@ services:
       - duplicacy_cache:/cache
       - /var/lib/docker/volumes/:/backuproot:ro
     labels:
-      - traefik.frontend.rule=Host:duplicacy
+      - traefik.frontend.rule=Host:duplicacy.docker.home
       - traefik.port=3875
 
   cadvisor:
@@ -112,7 +112,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
     labels:
-      - traefik.frontend.rule=Host:cadvisor
+      - traefik.frontend.rule=Host:cadvisor.docker.home
       - traefik.port=8080
 
 volumes:
@@ -132,3 +132,4 @@ networks:
       driver: default
       config:
         - subnet: 10.10.10.0/24
+        
