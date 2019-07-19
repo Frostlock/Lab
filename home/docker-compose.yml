@@ -1,43 +1,7 @@
 version: '2'
 
 services:
-  traefik:
-    container_name: traefik
-    image: traefik
-    command: --api --docker
-    restart: always
-    networks:
-      - container_network
-    ports:
-      - "80:80"
-#      - "8081:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - traefik_tmp:/tmp
-    labels:
-      - traefik.frontend.rule=Host:traefik.docker.home
-      - traefik.port=8080
-
-  portainer:
-    container_name: portainer
-    image: portainer/portainer
-    command: -H unix:///var/run/docker.sock
-    restart: always
-    environment:
-      - TZ=Europe/Brussels
-      - RUNAS_UID0=false
-    networks:
-      - container_network
-#    ports:
-#      - 9000:9000
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
-    labels:
-      - traefik.frontend.rule=Host:portainer.docker.home
-      - traefik.port=9000
-
-  unifi:
+    unifi:
     container_name: unifi
     image: "jacobalberty/unifi"
     network_mode: "host"
@@ -56,6 +20,42 @@ services:
     volumes:
       - unifi_data:/unifi
       - unifi_runtime:/var/run/unifi
+      
+  traefik:
+    container_name: traefik
+    image: traefik
+    command: --api --docker --docker.domain=docker.home
+    restart: always
+    networks:
+      - container_network
+    ports:
+      - "80:80"
+#      - "8081:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik_tmp:/tmp
+    labels:
+      - traefik.frontend.rule=PathPrefixStrip:/traefik/
+      - traefik.port=8080
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    environment:
+      - TZ=Europe/Brussels
+      - RUNAS_UID0=false
+    networks:
+      - container_network
+#    ports:
+#      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    labels:
+      - traefik.frontend.rule=PathPrefixStrip:/portainer/
+      - traefik.port=9000
 
   organizr:
     container_name: organizr
@@ -71,17 +71,18 @@ services:
     volumes:
       - organizr_data:/config
     labels:
-      - traefik.frontend.rule=Host:organizr.docker.home
+      - traefik.frontend.rule=PathPrefixStrip:/organizr/
       - traefik.port=80
 
   duplicacy:
     container_name: duplicacy
     image: saspus/duplicacy-web
-    hostname: 'docker-host'
+    hostname: 'docker.home'
     restart: always
     environment:
       - TZ=Europe/Brussels
       - RUNAS_UID0=false
+      - DWE_PASSWORD=frostlock
     networks:
       - container_network
 #    ports:
@@ -92,7 +93,8 @@ services:
       - duplicacy_cache:/cache
       - /var/lib/docker/volumes/:/backuproot:ro
     labels:
-      - traefik.frontend.rule=Host:duplicacy.docker.home
+      - traefik.rule1.frontend.rule=PathPrefixStrip:/duplicacy/
+      - traefik.rule2.frontend.rule=PathPrefix:/verify_password,/get_backup_status,/get_schedule_status,/list_repositories,/list_revisions,/add_job,/delete_repository,/lookup_schedule,/save_schedule,/get_patterns,/save_patterns,/save_repository,/start_stop_backup,/get_schedule_email,/set_schedule_email,/test_schedule_email,/delete_schedule,/list_files,/get_listing_status,/update_listing_session,/list_restore_directory,/list_local_directory,/start_restore,/get_restore_status,/show_log
       - traefik.port=3875
 
   cadvisor:
@@ -112,7 +114,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
     labels:
-      - traefik.frontend.rule=Host:cadvisor.docker.home
+      - traefik.frontend.rule=PathPrefixStrip:/cadvisor/
       - traefik.port=8080
 
 volumes:
@@ -132,4 +134,3 @@ networks:
       driver: default
       config:
         - subnet: 10.10.10.0/24
-        
