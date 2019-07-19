@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-    unifi:
+  unifi:
     container_name: unifi
     image: "jacobalberty/unifi"
     network_mode: "host"
