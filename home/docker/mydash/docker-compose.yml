@@ -5,9 +5,24 @@ services:
     container_name: mydash
     image: mydash
     restart: always
-    ports:
-      - "8003:80"
+    networks:
+      - mydash_network
+#    ports:
+#      - "8003:80"
+    labels:
+      - traefik.frontend.rule=PathPrefixStrip:/mydash/
+      - traefik.docker.network=mydash_network
+      - traefik.port=80
+# Might need a nginx.conf later?
 #    volumes:
 #      - /host/path/nginx.conf:/etc/nginx/nginx.conf:ro
-# or add this to dockerfile
+# or add this to the dockerfile and bake the config in the container
 #   COPY nginx.conf /etc/nginx/nginx.conf
+
+networks:
+  mydash_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.11.0/24
