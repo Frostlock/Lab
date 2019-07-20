@@ -18,7 +18,7 @@ request.onload = function () {
         var itemlistHTML = '';
         for (var i = 0; i < config.items.length; i++) {
             var item = config.items[i];
-            itemlistHTML += '<a href="'+item.link+'" title="'+item.alt+'"><i class="'+item.icon+' fa-fw"></i></a>';
+            itemlistHTML += '<a target="_blank" href="'+item.link+'" title="'+item.alt+'"><i class="'+item.icon+' fa-fw"></i></a>';
         }
         document.getElementById("itemlist").innerHTML = itemlistHTML;
     } else {
