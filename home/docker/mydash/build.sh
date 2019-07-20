@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-docker build -t mydash
+docker build -t mydash .
