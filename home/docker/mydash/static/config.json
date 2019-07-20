@@ -1,20 +1,42 @@
 {
 	"title" : "My Dash",
+	"hide_corner" : true,
+	"refresh_rate" : 5,
 	"items" : [
 		{
 			"alt" : "Github",
 			"icon" : "fab fa-github",
-			"link" : "https://github.com/Swagielka"
+			"link" : "https://github.com/frostlock"
 		},
 		{
-			"alt" : "Twitter",
-			"icon" : "fab fa-twitter",
-			"link" : "https://twitter.com/Kukielka_"
+			"alt" : "Ubiquity Unifi",
+			"icon" : "fas fa-network-wired",
+			"link" : "http://docker.home:8080"
 		},
 		{
-			"alt" : "Docker Hub",
+			"alt" : "Portainer",
 			"icon" : "fab fa-docker",
-			"link" : "https://hub.docker.com/u/kukielka/"
+			"link" : "http://docker.home/portainer/"
+		},
+		{
+			"alt" : "Traefik",
+			"icon" : "fas fa-user-shield",
+			"link" : "http://docker.home/traefik/"
+		},
+		{
+			"alt" : "Duplicacy",
+			"icon" : "fas fa-save",
+			"link" : "http://docker.home/duplicacy/"
+		},
+		{
+			"alt" : "cAdvisor",
+			"icon" : "fas fa-glasses",
+			"link" : "http://docker.home/cadvisor/containers/"
+		},
+		{
+			"alt" : "Config",
+			"icon" : "fas fa-cog fa-spin",
+			"link" : "config.json"
 		}
 	]
 }
