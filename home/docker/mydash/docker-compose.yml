@@ -7,6 +7,7 @@ services:
     restart: always
     networks:
       - mydash_network
+      - container_network
 #    ports:
 #      - "8003:80"
     labels:
@@ -26,3 +27,6 @@ networks:
       driver: default
       config:
         - subnet: 10.10.11.0/24
+  container_network:
+    external:
+      name: pi_container_network
