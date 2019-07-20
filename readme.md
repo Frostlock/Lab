@@ -1,3 +1,3 @@
 # Lab
 
-This repository is used for my some of my personal experiments.
+This repository contains several of my personal experiments.
