@@ -1,40 +1,47 @@
 {
 	"title" : "My Dash",
-	"hide_corner" : true,
+	"hide_corner" : false,
 	"refresh_rate" : 5,
 	"items" : [
 		{
-			"alt" : "Github",
-			"icon" : "fab fa-github",
-			"link" : "https://github.com/frostlock"
+			"alt" : "Home",
+			"target" : "frame",
+			"icon" : "fas fa-home",
+			"link" : "about:blank"
 		},
 		{
 			"alt" : "Ubiquity Unifi",
+			"target" : "_new",
 			"icon" : "fas fa-network-wired",
 			"link" : "http://docker.home:8080"
 		},
 		{
 			"alt" : "Portainer",
+			"target" : "frame",
 			"icon" : "fab fa-docker",
 			"link" : "http://docker.home/portainer/"
 		},
 		{
 			"alt" : "Traefik",
+			"target" : "frame",
 			"icon" : "fas fa-user-shield",
 			"link" : "http://docker.home/traefik/"
 		},
 		{
 			"alt" : "Duplicacy",
+			"target" : "frame",
 			"icon" : "fas fa-save",
 			"link" : "http://docker.home/duplicacy/"
 		},
 		{
 			"alt" : "cAdvisor",
+			"target" : "frame",
 			"icon" : "fas fa-glasses",
 			"link" : "http://docker.home/cadvisor/containers/"
 		},
 		{
 			"alt" : "Config",
+			"target" : "frame",
 			"icon" : "fas fa-cog fa-spin",
 			"link" : "config.json"
 		}
