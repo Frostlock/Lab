@@ -1,12 +1,16 @@
 # My Dash
+A portal application delivered in a container.
+Container is built on top of the standard nginx container with a static website (html, css & javascript)
+The application provides a portal for my selfhosted container applications. 
 
-Based on
-https://github.com/Swagielka/simple-dash
+## Credits
+Based on https://github.com/Swagielka/simple-dash  
 See original readme and license in the static subfolder.
 
-## Font Awesome
-Free tier
-[Font Awesome](http://fontawesome.io/icons/)
+This project uses 
 
-## Trianglify
+* **Font Awesome**  
+Free tier of [Font Awesome](http://fontawesome.io/icons/)
+
+* **Trianglify**  
 https://github.com/qrohlf/trianglify
