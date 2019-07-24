@@ -57,23 +57,6 @@ services:
       - traefik.frontend.rule=PathPrefixStrip:/portainer/
       - traefik.port=9000
 
-  organizr:
-    container_name: organizr
-    image: organizrtools/organizr-v2
-    restart: always
-    environment:
-      - TZ=Europe/Brussels
-      - RUNAS_UID0=false
-    networks:
-      - container_network
-#    ports:
-#      - 90:80
-    volumes:
-      - organizr_data:/config
-    labels:
-      - traefik.frontend.rule=PathPrefixStrip:/organizr/
-      - traefik.port=80
-
   duplicacy:
     container_name: duplicacy
     image: saspus/duplicacy-web
@@ -122,7 +105,6 @@ volumes:
   portainer_data:
   unifi_data:
   unifi_runtime:
-  organizr_data:
   duplicacy_data:
   duplicacy_log:
   duplicacy_cache:
