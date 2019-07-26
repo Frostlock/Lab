@@ -64,7 +64,8 @@ services:
     restart: always
     environment:
       - TZ=Europe/Brussels
-      - RUNAS_UID0=false
+      - USR_ID=0
+      - GRP_ID=0
       - DWE_PASSWORD=frostlock
     networks:
       - container_network
