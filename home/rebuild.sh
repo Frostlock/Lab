@@ -3,16 +3,19 @@
 # This script creates a new docker engine host in LXD
 # It requires a LXD bridge profile to be correctly configured.
 # (We want the new docker host to appear on the local network)
+#
 # You can opt deploy different host Operating Systems
 # Available images can be checked with the following command
 # lxc image list images:ubuntu
-
+#
+# The script recovers the latest backup from google drive
+# It expects to find google drive token in the home directory.
 
 # Parameters
 LXD_PROFILE=bridgeprofile
 LXD_IMAGE=images:ubuntu/bionic/amd64
 HOST=docker
-TOKEN_PATH=~/duplicacy-google-token.json
+TOKEN_FILE=duplicacy-google-token.json
 DUPLICACY=duplicacy_linux_x64_2.2.3
 
 # Old code to have a fixed IP and a variant hostname.
@@ -99,8 +102,11 @@ lxc exec $HOST -- sh -c " \
   mv ./$DUPLICACY /bin; \
 ";
 
-echo -e "\e[32m---> Prepare Google drive access token from $TOKEN_PATH to $HOST \e[39m";
-lxc file push $TOKEN_PATH $HOST/;
+echo -e "\e[32m---> Prepare Google drive access token. \e[39m";
+lxc file push ~/duplicacy-google-token.json $HOST/duplicacy-google-token.json;
+lxc exec $HOST -- sh -c ' \
+  cat /duplicacy-google-token.json
+';
 
 echo -e "\e[32m---> Connecting duplicacy to Google drive \e[39m";
 lxc exec $HOST -- sh -c ' \
