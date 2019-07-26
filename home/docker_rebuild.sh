@@ -100,7 +100,7 @@ lxc exec $HOST -- sh -c " \
 ";
 
 echo -e "\e[32m---> Prepare Google drive access token \e[39m";
-lxc file push $TOKEN_PATH $HOST/
+lxc file push $TOKEN_PATH $HOST/;
 
 echo -e "\e[32m---> Connecting duplicacy to Google drive \e[39m";
 lxc exec $HOST -- sh -c ' \
