@@ -10,7 +10,8 @@ services:
 #    ports:
 #      - "8003:80"
     labels:
-      - traefik.frontend.rule=PathPrefixStrip:/mydash/
+      - traefik.rule1.frontend.rule=PathPrefixStrip:/mydash/
+      - traefik.rule2.frontend.rule=Host:docker.home
 #      - traefik.docker.network=mydash_network
       - traefik.port=80
 # Might need a nginx.conf later?
