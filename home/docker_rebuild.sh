@@ -10,7 +10,7 @@
 
 # Parameters
 LXD_PROFILE=bridgeprofile
-LXD_IMAGE=images:ubuntu/xenial/amd64
+LXD_IMAGE=images:ubuntu/bionic/amd64
 HOST=docker
 TOKEN_PATH=~/duplicacy-google-token.json
 DUPLICACY=duplicacy_linux_x64_2.2.3
@@ -102,54 +102,54 @@ lxc exec $HOST -- sh -c " \
 echo -e "\e[32m---> Prepare Google drive access token from $TOKEN_PATH to $HOST \e[39m";
 lxc file push $TOKEN_PATH $HOST/;
 
-#echo -e "\e[32m---> Connecting duplicacy to Google drive \e[39m";
-#lxc exec $HOST -- sh -c ' \
-#  cd /var/lib/docker/volumes/; \
-#  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 init DockerVolumeBackup gcd://duplicacy; \
-#';
-#
-#echo -e "\e[32m---> Retrieving available revisions \e[39m";
-#lxc exec $HOST -- sh -c ' \
-#  cd /var/lib/docker/volumes/; \
-#  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 list > revisions.txt; \
-#';
-#
-#echo -e "\e[32m---> Executing restore of latest revision, this might take a while... \e[39m";
-#lxc exec $HOST -- sh -c ' \
-#  cd /var/lib/docker/volumes/; \
-#  REV=`tail -n 1 revisions.txt | awk '"'"'{print $4}'"'"'`; \
-#  echo "\e[32m---> Restoring revision $REV \e[39m"; \
-#  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 restore -r $REV -overwrite; \
-#' > restore.log;
-#echo "      Restore log available in ./restore.log";
-#
-#echo -e "\e[32m---> Clean up duplicacy artifacts on $HOST \e[39m";
-#lxc exec $HOST -- sh -c ' \
-#  rm /duplicacy-google-token.json; \
-#  rm /var/lib/docker/volumes/revisions.txt; \
-#  rm -r /var/lib/docker/volumes/.duplicacy; \
-#';
-#
-#echo -e "\e[32m---> Restart Docker Daemon \e[39m";
-#lxc exec $HOST -- sh -c "systemctl restart docker";
-#
-#echo -e "\e[32m---> Install Docker compose \e[39m";
-#lxc exec $HOST -- sh -c ' \
-#sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose; \
-#sudo chmod +x /usr/local/bin/docker-compose; \
-#';
-#
-#echo -e "\e[32m---> Cloning git repository\e[39m";
-#lxc exec $HOST -- sh -c ' \
-#  git clone https://github.com/Frostlock/Lab.git;
-#';
-#
-#echo -e "\e[32m---> Running docker-compose, this might take a while... \e[39m";
-#lxc exec $HOST -- sh -c ' \
-#  cd Lab/home/docker/pi; \
-#  docker-compose up -d; \
-#  cd ../mydash;
-#  ./deploy.sh; \
-#';
-#
-#echo -e "\e[32m---> Script finished, $HOST up and running :) \e[39m";
+echo -e "\e[32m---> Connecting duplicacy to Google drive \e[39m";
+lxc exec $HOST -- sh -c ' \
+  cd /var/lib/docker/volumes/; \
+  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 init DockerVolumeBackup gcd://duplicacy; \
+';
+
+echo -e "\e[32m---> Retrieving available revisions \e[39m";
+lxc exec $HOST -- sh -c ' \
+  cd /var/lib/docker/volumes/; \
+  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 list > revisions.txt; \
+';
+
+echo -e "\e[32m---> Executing restore of latest revision, this might take a while... \e[39m";
+lxc exec $HOST -- sh -c ' \
+  cd /var/lib/docker/volumes/; \
+  REV=`tail -n 1 revisions.txt | awk '"'"'{print $4}'"'"'`; \
+  echo "\e[32m---> Restoring revision $REV \e[39m"; \
+  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 restore -r $REV -overwrite; \
+' > restore.log;
+echo "      Restore log available in ./restore.log";
+
+echo -e "\e[32m---> Clean up duplicacy artifacts on $HOST \e[39m";
+lxc exec $HOST -- sh -c ' \
+  rm /duplicacy-google-token.json; \
+  rm /var/lib/docker/volumes/revisions.txt; \
+  rm -r /var/lib/docker/volumes/.duplicacy; \
+';
+
+echo -e "\e[32m---> Restart Docker Daemon \e[39m";
+lxc exec $HOST -- sh -c "systemctl restart docker";
+
+echo -e "\e[32m---> Install Docker compose \e[39m";
+lxc exec $HOST -- sh -c ' \
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose; \
+sudo chmod +x /usr/local/bin/docker-compose; \
+';
+
+echo -e "\e[32m---> Cloning git repository\e[39m";
+lxc exec $HOST -- sh -c ' \
+  git clone https://github.com/Frostlock/Lab.git;
+';
+
+echo -e "\e[32m---> Running docker-compose, this might take a while... \e[39m";
+lxc exec $HOST -- sh -c ' \
+  cd Lab/home/docker/pi; \
+  docker-compose up -d; \
+  cd ../mydash;
+  ./deploy.sh; \
+';
+
+echo -e "\e[32m---> Script finished, $HOST up and running :) \e[39m";
