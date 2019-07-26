@@ -105,7 +105,7 @@ lxc exec $HOST -- sh -c " \
 echo -e "\e[32m---> Prepare Google drive access token. \e[39m";
 lxc file push ~/duplicacy-google-token.json $HOST/duplicacy-google-token.json;
 lxc exec $HOST -- sh -c ' \
-  cat /duplicacy-google-token.json
+  cat /duplicacy-google-token.json; \
 ';
 
 echo -e "\e[32m---> Connecting duplicacy to Google drive \e[39m";
