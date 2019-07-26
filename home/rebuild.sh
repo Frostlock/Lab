@@ -94,51 +94,51 @@ sleep 5;
 echo -e "\e[32m---> Testing docker \e[39m";
 lxc exec $HOST -- sh -c "docker run hello-world";
 
-## Download duplicacy binary, don't rename it :)
-## https://forum.duplicacy.com/t/restore-to-a-different-folder-or-computer/1103
-#echo -e "\e[32m---> Downloading duplicacy binary $DUPLICACY \e[39m";
-#lxc exec $HOST -- sh -c " \
-#  wget https://github.com/gilbertchen/duplicacy/releases/download/v2.2.3/$DUPLICACY; \
-#  chmod u+x $DUPLICACY; \
-#  mv ./$DUPLICACY /bin; \
-#";
-#
-#echo -e "\e[32m---> Prepare Google drive access token. \e[39m";
-#lxc file push ~/duplicacy-google-token.json $HOST/duplicacy-google-token.json;
-#lxc exec $HOST -- sh -c ' \
-#  cat /duplicacy-google-token.json; \
-#';
-#
-#echo -e "\e[32m---> Connecting duplicacy to Google drive \e[39m";
-#lxc exec $HOST -- sh -c ' \
-#  cd /var/lib/docker/volumes/; \
-#  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 init DockerVolumeBackup gcd://duplicacy; \
-#';
-#
-#echo -e "\e[32m---> Retrieving available revisions \e[39m";
-#lxc exec $HOST -- sh -c ' \
-#  cd /var/lib/docker/volumes/; \
-#  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 list > revisions.txt; \
-#';
-#
-#echo -e "\e[32m---> Executing restore of latest revision, this might take a while... \e[39m";
-#lxc exec $HOST -- sh -c ' \
-#  cd /var/lib/docker/volumes/; \
-#  REV=`tail -n 1 revisions.txt | awk '"'"'{print $4}'"'"'`; \
-#  echo "\e[32m---> Restoring revision $REV \e[39m"; \
-#  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 restore -r $REV -overwrite; \
-#' > restore.log;
-#echo "      Restore log available in ./restore.log";
-#
-#echo -e "\e[32m---> Clean up duplicacy artifacts on $HOST \e[39m";
-#lxc exec $HOST -- sh -c ' \
-#  rm /duplicacy-google-token.json; \
-#  rm /var/lib/docker/volumes/revisions.txt; \
-#  rm -r /var/lib/docker/volumes/.duplicacy; \
-#';
-#
-#echo -e "\e[32m---> Restart Docker Daemon \e[39m";
-#lxc exec $HOST -- sh -c "systemctl restart docker";
+# Download duplicacy binary, don't rename it :)
+# https://forum.duplicacy.com/t/restore-to-a-different-folder-or-computer/1103
+echo -e "\e[32m---> Downloading duplicacy binary $DUPLICACY \e[39m";
+lxc exec $HOST -- sh -c " \
+  wget https://github.com/gilbertchen/duplicacy/releases/download/v2.2.3/$DUPLICACY; \
+  chmod u+x $DUPLICACY; \
+  mv ./$DUPLICACY /bin; \
+";
+
+echo -e "\e[32m---> Prepare Google drive access token. \e[39m";
+lxc file push ~/duplicacy-google-token.json $HOST/duplicacy-google-token.json;
+lxc exec $HOST -- sh -c ' \
+  cat /duplicacy-google-token.json; \
+';
+
+echo -e "\e[32m---> Connecting duplicacy to Google drive \e[39m";
+lxc exec $HOST -- sh -c ' \
+  cd /var/lib/docker/volumes/; \
+  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 init DockerVolumeBackup gcd://duplicacy; \
+';
+
+echo -e "\e[32m---> Retrieving available revisions \e[39m";
+lxc exec $HOST -- sh -c ' \
+  cd /var/lib/docker/volumes/; \
+  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 list > revisions.txt; \
+';
+
+echo -e "\e[32m---> Executing restore of latest revision, this might take a while... \e[39m";
+lxc exec $HOST -- sh -c ' \
+  cd /var/lib/docker/volumes/; \
+  REV=`tail -n 1 revisions.txt | awk '"'"'{print $4}'"'"'`; \
+  echo "\e[32m---> Restoring revision $REV \e[39m"; \
+  echo /duplicacy-google-token.json | duplicacy_linux_x64_2.2.3 restore -r $REV -overwrite; \
+' > restore.log;
+echo "      Restore log available in ./restore.log";
+
+echo -e "\e[32m---> Clean up duplicacy artifacts on $HOST \e[39m";
+lxc exec $HOST -- sh -c ' \
+  rm /duplicacy-google-token.json; \
+  rm /var/lib/docker/volumes/revisions.txt; \
+  rm -r /var/lib/docker/volumes/.duplicacy; \
+';
+
+echo -e "\e[32m---> Restart Docker Daemon \e[39m";
+lxc exec $HOST -- sh -c "systemctl restart docker";
 
 echo -e "\e[32m---> Install Docker compose \e[39m";
 lxc exec $HOST -- sh -c ' \
