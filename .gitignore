@@ -12,3 +12,6 @@ venv/
 
 # exclude pycharm project information
 .idea/
+
+# exclude vscode configuration files
+.vscode/
