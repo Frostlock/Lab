@@ -57,23 +57,6 @@ services:
       - traefik.frontend.rule=PathPrefixStrip:/portainer/
       - traefik.port=9000
 
-  organizr:
-    container_name: organizr
-    image: organizrtools/organizr-v2
-    restart: always
-    environment:
-      - TZ=Europe/Brussels
-      - RUNAS_UID0=false
-    networks:
-      - container_network
-#    ports:
-#      - 90:80
-    volumes:
-      - organizr_data:/config
-    labels:
-      - traefik.frontend.rule=PathPrefixStrip:/organizr/
-      - traefik.port=80
-
   duplicacy:
     container_name: duplicacy
     image: saspus/duplicacy-web
@@ -81,7 +64,8 @@ services:
     restart: always
     environment:
       - TZ=Europe/Brussels
-      - RUNAS_UID0=false
+      - USR_ID=0
+      - GRP_ID=0
       - DWE_PASSWORD=frostlock
     networks:
       - container_network
@@ -94,7 +78,7 @@ services:
       - /var/lib/docker/volumes/:/backuproot:ro
     labels:
       - traefik.rule1.frontend.rule=PathPrefixStrip:/duplicacy/
-      - traefik.rule2.frontend.rule=PathPrefix:/verify_password,/get_backup_status,/get_schedule_status,/list_repositories,/list_revisions,/add_job,/delete_repository,/lookup_schedule,/save_schedule,/get_patterns,/save_patterns,/save_repository,/start_stop_backup,/get_schedule_email,/set_schedule_email,/test_schedule_email,/delete_schedule,/list_files,/get_listing_status,/update_listing_session,/list_restore_directory,/list_local_directory,/start_restore,/get_restore_status,/show_log
+      - traefik.rule2.frontend.rule=PathPrefix:/start_stop_schedule,/swap_jobs,/verify_password,/get_backup_status,/get_schedule_status,/list_repositories,/list_revisions,/add_job,/delete_repository,/lookup_schedule,/save_schedule,/get_patterns,/save_patterns,/save_repository,/start_stop_backup,/get_schedule_email,/set_schedule_email,/test_schedule_email,/delete_schedule,/list_files,/get_listing_status,/update_listing_session,/list_restore_directory,/list_local_directory,/start_restore,/get_restore_status,/show_log
       - traefik.port=3875
 
   cadvisor:
@@ -122,7 +106,6 @@ volumes:
   portainer_data:
   unifi_data:
   unifi_runtime:
-  organizr_data:
   duplicacy_data:
   duplicacy_log:
   duplicacy_cache:

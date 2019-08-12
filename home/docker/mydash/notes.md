@@ -5,6 +5,8 @@ https://github.com/ijmbarr/images-to-triangles
 # Tweak the CSS files of underlying webapps?
 ## Portainer
 https://github.com/portainer/portainer/issues/360
+My CSS file:
+http://docker.home/portainer/main.1ba5d28d7c94b0be5f82.css
 
 ### Duplicacy
 doesn't look to have a CSS file? maybe run a find/search on it
