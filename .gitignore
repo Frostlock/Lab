@@ -14,5 +14,6 @@ __pycache__/
 # exclude pycharm project information
 .idea/
 
-# exclude vscode workspace information
+# exclude vscode configuration and workspace files
 .vscode/
+workspace.code-workspace
