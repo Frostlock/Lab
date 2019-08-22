@@ -64,14 +64,14 @@ echo -e "\e[32m---> Upgrading new pihole host:\e[39m";
 lxc exec $HOST -- sh -c " \
   apt-get -qq update; \
   apt-get -qq -y upgrade; \
-  apt-get -qq -y install wget nano; \
+  apt-get -qq -y install wget nano git; \
 ";
 
 # Install pi-hole
 echo -e "\e[32m---> Installing pi-hole: \e[39m";
 lxc exec $HOST -- sh -c " \
   git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole; \
-  cd "Pi-hole/automated install/"; \
+  cd 'Pi-hole/automated install/'; \
   sudo bash basic-install.sh; \
 ";
 
