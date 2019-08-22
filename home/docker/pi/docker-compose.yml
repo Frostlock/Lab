@@ -59,8 +59,9 @@ services:
       # run `touch ./pihole.log` first unless you like errors
       # - ./pihole.log:/var/log/pihole.log
     environment:
+      ServerIP: 10.0.0.50
       PROXY_LOCATION: pihole
-      VIRTUAL_HOST: pihole.homedomain.lan
+      VIRTUAL_HOST: pihole.docker.home
       VIRTUAL_PORT: 80
       TZ: 'Europe/Brussels'
       # WEBPASSWORD:
@@ -68,8 +69,6 @@ services:
       - container_network
     restart: unless-stopped
     labels:
-       # required when using --docker.exposedbydefault=false
-       - "traefik.enable=true"
        # https://www.techjunktrunk.com/docker/2017/11/03/traefik-default-server-catch-all/
        - "traefik.frontend.rule=HostRegexp:pihole.docker.home,{catchall:.*}"
        - "traefik.frontend.priority=1"
@@ -147,6 +146,8 @@ volumes:
   duplicacy_data:
   duplicacy_log:
   duplicacy_cache:
+  pihole_config:
+  pihole_dnsmasq:
 
 networks:
   container_network:
