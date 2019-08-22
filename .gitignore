@@ -9,6 +9,10 @@ venv/
 
 # exclude compiled python files
 *.py[cod]
+__pycache__/
 
 # exclude pycharm project information
 .idea/
+
+# exclude vscode workspace information
+.vscode/
