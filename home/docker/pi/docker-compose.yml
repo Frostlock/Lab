@@ -30,13 +30,51 @@ services:
       - container_network
     ports:
       - "80:80"
-#      - "8081:8080"
+      #- "443:443"
+      #- "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - traefik_tmp:/tmp
     labels:
       - traefik.frontend.rule=PathPrefixStrip:/traefik/
       - traefik.port=8080
+
+  pihole:
+    container_name: pihole
+    domainname: docker.home
+
+    image: pihole/pihole:latest
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    ports:
+      - '0.0.0.0:53:53/tcp'
+      - '0.0.0.0:53:53/udp'
+      - '0.0.0.0:67:67/udp'
+      - '0.0.0.0:8053:80/tcp'
+      #- "443:443/tcp"
+    volumes:
+      - pihole_config:/etc/pihole/
+      - pihole_dnsmasq:/etc/dnsmasq.d/
+      # run `touch ./pihole.log` first unless you like errors
+      # - ./pihole.log:/var/log/pihole.log
+    environment:
+      PROXY_LOCATION: pihole
+      VIRTUAL_HOST: pihole.homedomain.lan
+      VIRTUAL_PORT: 80
+      TZ: 'Europe/Brussels'
+      # WEBPASSWORD:
+    networks:
+      - container_network
+    restart: unless-stopped
+    labels:
+       # required when using --docker.exposedbydefault=false
+       - "traefik.enable=true"
+       # https://www.techjunktrunk.com/docker/2017/11/03/traefik-default-server-catch-all/
+       - "traefik.frontend.rule=HostRegexp:pihole.docker.home,{catchall:.*}"
+       - "traefik.frontend.priority=1"
+       - "traefik.backend=pihole"
+       - "traefik.port=80"
 
   portainer:
     container_name: portainer
