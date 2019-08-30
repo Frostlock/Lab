@@ -17,3 +17,7 @@ __pycache__/
 # exclude vscode configuration and workspace files
 .vscode/
 workspace.code-workspace
+
+# exclude .NET core binaries and obj subfolders
+.NET Core/bin/
+.NET Core/obj/
