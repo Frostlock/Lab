@@ -21,3 +21,5 @@ workspace.code-workspace
 # exclude .NET core binaries and obj subfolders
 .NET Core/bin/
 .NET Core/obj/
+IOT/IOT hub reader/bin/
+IOT/IOT hub reader/obj/

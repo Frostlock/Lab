@@ -1,5 +1,14 @@
 # Notes
 
+## Running the code
+
+in the folder
+
+``` powershell
+dotnet restore
+dotnet run
+```
+
 ## Publish EXE
 
 dotnet publish -c Release -r win10-x64
@@ -11,7 +20,7 @@ dotnet publish -c Release -r ubuntu.16.10-x64
 Some links on doing computer vision with C#
 
 In combination with OpenCV
-https://www.c-sharpcorner.com/article/a-quick-introduction-to-computer-vision-using-c-sharp/
+<https://www.c-sharpcorner.com/article/a-quick-introduction-to-computer-vision-using-c-sharp/>
 
 Emgu CV is a .NET wrapper for OpenCV
 
