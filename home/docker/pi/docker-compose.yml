@@ -23,7 +23,7 @@ services:
       
   traefik:
     container_name: traefik
-    image: traefik
+    image: traefik:v1.7.18-alpine # Latest is now Traefik v2 which leads to a config issue I need to fix
     command: --api --docker --docker.domain=docker.home
     restart: always
     networks:
