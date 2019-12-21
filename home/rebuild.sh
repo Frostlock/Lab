@@ -155,7 +155,9 @@ echo -e "\e[32m---> Running docker-compose, this might take a while... \e[39m";
 lxc exec $HOST -- sh -c ' \
   cd Lab/home/docker/pi; \
   docker-compose up -d; \
-  cd ../mydash;
+  cd ../mydash; \
+  ./deploy.sh; \
+  cd ../db; \
   ./deploy.sh; \
 ';
 
