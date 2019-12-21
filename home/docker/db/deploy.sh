@@ -2,6 +2,7 @@
 # To overwrite local changes uncomment the next line
 #git reset --hard origin/master
 
-git pull
-docker build -t db .
+#No custom container yet so no need to build it :)
+#git pull
+#docker build -t db .
 docker-compose up -d
